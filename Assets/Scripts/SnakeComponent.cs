@@ -1,23 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class SnakeComponent : MonoBehaviour
 {
     [SerializeField] private List<Transform> _tails;
+    [SerializeField] private List<Transform> _spawnApple;
     [SerializeField] private float _bonesDistance;
     [SerializeField] private GameObject _bonePrefab;
+    [SerializeField] private GameObject _applePrefab;
     [SerializeField, Range(0f, 20f)] private float _speedSnake;
     [SerializeField, Range(0f, 5f)] private float _speddSnakeAdd; 
     [SerializeField, Range(0f, 400f)] private float _rotateSnake;
+    [SerializeField] private AudioSource _clip;
+    [SerializeField] private Transform _bodyPos;
+    [SerializeField] private UnityEvent _onEat;
 
     private float _angel;
     private float _sqrDistance;
 
-
-    private void Start()
-    {
-        
-    }
     private void Update()
     {
         MoveSnake(transform.position + _speedSnake * Time.deltaTime * transform.forward);
@@ -49,10 +51,18 @@ public class SnakeComponent : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Apple"))
         {
+            var spawn = Random.Range(0, _spawnApple.Count);
             Destroy(collision.gameObject);
-            var bone = Instantiate(_bonePrefab, transform.position, Quaternion.identity);
-            _tails.Add(bone.transform);
+            var bone = Instantiate(_bonePrefab, _bodyPos.transform.position, Quaternion.identity);           
+            _tails.Add(bone.transform);            
+            Instantiate(_applePrefab, _spawnApple[spawn].transform.position, Quaternion.identity);
             _speedSnake += _speddSnakeAdd;
+            _onEat?.Invoke();
+        }
+        if (collision.gameObject.CompareTag("Body"))
+        {
+            _clip.Play();
+            SceneManager.LoadScene("Level1");
         }
     }
 }
