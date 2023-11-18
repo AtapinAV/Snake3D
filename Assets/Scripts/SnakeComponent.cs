@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,7 +13,7 @@ public class SnakeComponent : MonoBehaviour
     [SerializeField] private GameObject _applePrefab;
     [SerializeField, Range(0f, 20f)] private float _speedSnake;
     [SerializeField, Range(0f, 5f)] private float _speddSnakeAdd; 
-    [SerializeField, Range(0f, 400f)] private float _rotateSnake;
+    [SerializeField, Range(0f, 500f)] private float _rotateSnake;
     [SerializeField] private AudioSource _clip;
     [SerializeField] private Transform _bodyPos;
     [SerializeField] private UnityEvent _onEat;
@@ -62,7 +63,13 @@ public class SnakeComponent : MonoBehaviour
         if (collision.gameObject.CompareTag("Body"))
         {
             _clip.Play();
-            SceneManager.LoadScene("Level1");
+            StartCoroutine(NewGame());
         }
+    }
+
+    private IEnumerator NewGame()
+    {
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene("Level1");
     }
 }

@@ -1,9 +1,11 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject _pause;
+    [SerializeField] private Text _appleText;
 
     private bool _isPaused = false;
 
@@ -49,6 +51,12 @@ public class MenuManager : MonoBehaviour
             Time.timeScale = 1f;
         }
 
+    }
+
+    public void AddApple()
+    {
+        int a = int.Parse(_appleText.text) + 1;
+        _appleText.text = a.ToString();
     }
     public void Exit()
     {
