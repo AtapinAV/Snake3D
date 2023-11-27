@@ -63,6 +63,8 @@ public class SnakeComponent : MonoBehaviour
         if (collision.gameObject.CompareTag("Body"))
         {
             _clip.Play();
+            _speedSnake = 0f;
+            _rotateSnake = 0f;
             StartCoroutine(NewGame());
         }
     }
