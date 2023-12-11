@@ -6,6 +6,10 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject _pause;
     [SerializeField] private Text _appleText;
+    [SerializeField] private Text _highAppleText;
+
+    private int _score;
+    private int _highScoree;
 
     private bool _isPaused = false;
 
@@ -52,18 +56,9 @@ public class MenuManager : MonoBehaviour
         }
 
     }
-
     public void AddApple()
     {
-        int a = int.Parse(_appleText.text) + 1;
-        _appleText.text = a.ToString();
-    }
-    public void Exit()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#elif UNITY_STANDALONE_WIN && !UNITY_EDITOR
-            Application.Quit();
-#endif
+        _score++;
+        _appleText.text = _score.ToString();
     }
 }
