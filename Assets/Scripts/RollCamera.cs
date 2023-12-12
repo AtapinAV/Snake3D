@@ -6,7 +6,6 @@ public class RollCamera : MonoBehaviour
     [SerializeField] private GameObject _camera3D;
 
     private bool _cameraROLL = true;
-
     private void Update()
     {
         CameraRoll();

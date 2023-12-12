@@ -17,6 +17,7 @@ public class SnakeComponent : MonoBehaviour
     [SerializeField] private AudioSource _clip;
     [SerializeField] private Transform _bodyPos;
     [SerializeField] private UnityEvent _onEat;
+    [SerializeField] MenuManager _menuManager;
 
     private float _angel;
     private float _sqrDistance;
@@ -65,6 +66,11 @@ public class SnakeComponent : MonoBehaviour
             _clip.Play();
             _speedSnake = 0f;
             _rotateSnake = 0f;
+            if (_menuManager.Score > _menuManager.HighScoree)
+            {
+                PlayerPrefs.SetInt("score", _menuManager.Score);
+                PlayerPrefs.Save();
+            }
             StartCoroutine(NewGame());
         }
     }
