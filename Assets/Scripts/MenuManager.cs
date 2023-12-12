@@ -13,9 +13,17 @@ public class MenuManager : MonoBehaviour
 
     private bool _isPaused = false;
 
+    private void Start()
+    {
+        //PlayerPrefs.DeleteAll();
+        _highScoree = PlayerPrefs.GetInt("score");
+        _highAppleText.text = _highScoree.ToString();
+    }
+
     private void Update()
     {
         PlayPause();
+        SaveApple();
     }
 
     private void PlayPause()
@@ -60,5 +68,13 @@ public class MenuManager : MonoBehaviour
     {
         _score++;
         _appleText.text = _score.ToString();
+    }
+    private void SaveApple()
+    {
+        if (_score > _highScoree)
+        {
+            PlayerPrefs.SetInt("score", _score);
+            PlayerPrefs.Save();
+        }
     }
 }

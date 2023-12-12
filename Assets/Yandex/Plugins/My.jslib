@@ -12,8 +12,4 @@ mergeInto(LibraryManager.library, {
       }
     })
   },
-  Hello: function () {
-    myGameInstance.SendMessage('Yandex', 'SetName', player.getName());
-    myGameInstance.SendMessage('Yandex', 'SetPhoto', player.getPhoto("medium"));
-  },
 });
