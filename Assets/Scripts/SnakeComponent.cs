@@ -17,7 +17,7 @@ public class SnakeComponent : MonoBehaviour
     [SerializeField] private AudioSource _clip;
     [SerializeField] private Transform _bodyPos;
     [SerializeField] private UnityEvent _onEat;
-    [SerializeField] MenuManager _menuManager;
+    [SerializeField] private MenuManager _menuManager;
 
     private float _angel;
     private float _sqrDistance;
@@ -54,12 +54,12 @@ public class SnakeComponent : MonoBehaviour
         if (collision.gameObject.CompareTag("Apple"))
         {
             var spawn = Random.Range(0, _spawnApple.Count);
-            Destroy(collision.gameObject);
             var bone = Instantiate(_bonePrefab, _bodyPos.transform.position, Quaternion.identity);           
             _tails.Add(bone.transform);            
             Instantiate(_applePrefab, _spawnApple[spawn].transform.position, Quaternion.identity);
             _speedSnake += _speddSnakeAdd;
             _onEat?.Invoke();
+            Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("Body"))
         {
